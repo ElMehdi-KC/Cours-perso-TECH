@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECH Global University Afrique - Hub de Formations</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --tech-blue: #002B49;
+      --tech-cyan: #00A3E0;
+      --tech-dark: #0A192F;
+      --tech-light: #F4F7F9;
+      --tech-gray: #6C757D;
+      --tech-border: #E2E8F0;
+      --tech-white: #FFFFFF;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background-color: var(--tech-light); color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+
+    header {
+      background-color: var(--tech-blue); color: var(--tech-white); padding: 0.8rem 2rem;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      position: sticky; top: 0; z-index: 100;
+    }
+
+    .brand-container { display: flex; align-items: center; gap: 1.5rem; }
+
+    .tech-logo-container {
+      display: flex; align-items: center; gap: 12px; background: white; padding: 6px 16px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .tech-logo-main { position: relative; display: inline-flex; align-items: baseline; font-family: 'Montserrat', sans-serif; padding-bottom: 10px; }
+    .tech-word { font-size: 1.7rem; font-weight: 800; color: #3F3F44; letter-spacing: -0.5px; }
+    .tech-h-multicolor {
+      font-size: 1.7rem; font-weight: 800;
+      background: linear-gradient(180deg, #E6007E 0%, #FFD100 30%, #F37021 50%, #00A3E0 75%, #8DC63F 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .tech-sub-afrique { position: absolute; bottom: -3px; right: 0; font-size: 0.72rem; font-weight: 800; font-style: italic; color: #00A3E0; letter-spacing: 0.8px; }
+    .tech-logo-tagline { font-family: 'Roboto', sans-serif; font-style: italic; font-size: 0.8rem; color: #555; line-height: 1.1; border-left: 1px solid #CCC; padding-left: 10px; }
+
+    .header-title { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 500; color: rgba(255, 255, 255, 0.9); border-left: 1px solid rgba(255, 255, 255, 0.3); padding-left: 1.2rem; }
+    .user-profile { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+    .region-badge { background: rgba(0, 163, 224, 0.2); border: 1px solid var(--tech-cyan); color: #E0F2FE; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
+
+    .main-container { display: grid; grid-template-columns: 320px 1fr; gap: 1.5rem; max-width: 1600px; margin: 2rem auto; width: 95%; flex: 1; }
+    .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+    .card { background: var(--tech-white); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--tech-border); }
+    .card-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--tech-blue); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+
+    .upload-zone { border: 2px dashed var(--tech-cyan); border-radius: 8px; padding: 1.5rem 1rem; text-align: center; background: #F0F9FF; cursor: pointer; }
+    .upload-zone i { font-size: 2rem; color: var(--tech-cyan); margin-bottom: 0.5rem; }
+    .file-input { display: none; }
+    .form-group { margin-top: 1rem; display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--tech-dark); }
+    .form-control { width: 100%; padding: 8px 12px; border: 1px solid var(--tech-border); border-radius: 6px; font-size: 0.9rem; outline: none; }
+    .btn-submit { margin-top: 1rem; width: 100%; background: var(--tech-cyan); color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
+    .filter-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .filter-btn { width: 100%; text-align: left; padding: 10px 14px; background: transparent; border: 1px solid transparent; border-radius: 6px; cursor: pointer; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; }
+    .filter-btn.active { background: var(--tech-blue); color: var(--tech-white); font-weight: 600; }
+    .count-badge { background: rgba(0, 0, 0, 0.08); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; }
+    .filter-btn.active .count-badge { background: var(--tech-cyan); color: white; }
+
+    .content-area { display: flex; flex-direction: column; gap: 1.5rem; }
+    .viewer-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--tech-border); display: flex; flex-direction: column; gap: 1rem; }
+    .viewer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--tech-border); padding-bottom: 1rem; }
+    .viewer-frame-container { width: 100%; min-height: 480px; background: #0F172A; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; position: relative; }
+
+    /* LECTEUR DE DIAPOSITIVES */
+    .slide-canvas { width: 100%; max-width: 800px; height: 400px; background: white; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .slide-title { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; color: var(--tech-blue); border-bottom: 2px solid var(--tech-cyan); padding-bottom: 10px; margin-bottom: 15px; }
+    .slide-body { font-size: 1rem; color: #333; line-height: 1.6; flex: 1; }
+    .slide-controls { display: flex; gap: 15px; align-items: center; margin-top: 15px; }
+    .btn-nav { background: var(--tech-cyan); color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: 600; }
+    .slide-indicator { color: white; font-size: 0.9rem; }
+
+    .presentations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
+    .ppt-card { background: white; border-radius: 10px; border: 1px solid var(--tech-border); overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); cursor: pointer; }
+    .ppt-card-header { background: var(--tech-blue); color: white; padding: 1rem; position: relative; min-height: 80px; display: flex; align-items: center; }
+    .ppt-card-title { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 600; }
+    .ppt-card-body { padding: 1rem; display: flex; flex-direction: column; gap: 10px; }
+    .ppt-tag { align-self: flex-start; background: #E0F2FE; color: #0369A1; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+
+    footer { background: var(--tech-dark); color: white; text-align: center; padding: 1.2rem; font-size: 0.85rem; margin-top: auto; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-container">
+      <div class="tech-logo-container">
+        <div class="tech-logo-main">
+          <span class="tech-word">tech</span><span class="tech-h-multicolor">h</span>
+          <span class="tech-sub-afrique">AFRIQUE</span>
+        </div>
+        <div class="tech-logo-tagline">global<br>university</div>
+      </div>
+      <div class="header-title">Espace Commercial & Formations</div>
+    </div>
+    
+    <div class="user-profile">
+      <i class="fa-solid fa-user-tie"></i>
+      <span>Conseiller Commercial</span>
+      <span class="region-badge"><i class="fa-solid fa-location-dot"></i> Côte d'Ivoire</span>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-cloud-arrow-up"></i> Importer un PPTX</div>
+        <form id="uploadForm">
+          <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+            <i class="fa-file-powerpoint fa-regular"></i>
+            <p id="fileNameDisplay">Cliquez pour choisir un fichier .pptx</p>
+            <input type="file" id="fileInput" class="file-input" accept=".pptx, .ppt" required onchange="handleFileSelect(event)">
+          </div>
+
+          <div class="form-group">
+            <label for="docTitle">Titre du module</label>
+            <input type="text" id="docTitle" class="form-control" placeholder="ex: Techniques de Vente Abidjan" required>
+          </div>
+
+          <div class="form-group">
+            <label for="docCategory">Catégorie</label>
+            <select id="docCategory" class="form-control">
+              <option value="commercial">Techniques Commerciales</option>
+              <option value="produit">Offre Académique TECH</option>
+              <option value="region">Spécificités Côte d'Ivoire</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-submit"><i class="fa-solid fa-plus"></i> Charger le module</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-filter"></i> Filtrer</div>
+        <ul class="filter-list">
+          <li><button class="filter-btn active" onclick="filterCategory('all', this)"><span><i class="fa-solid fa-layer-group"></i> Tous</span><span class="count-badge" id="count-all">0</span></button></li>
+          <li><button class="filter-btn" onclick="filterCategory('commercial', this)"><span><i class="fa-solid fa-chart-line"></i> Vente</span><span class="count-badge" id="count-commercial">0</span></button></li>
+          <li><button class="filter-btn" onclick="filterCategory('region', this)"><span><i class="fa-solid fa-globe"></i> Côte d'Ivoire</span><span class="count-badge" id="count-region">0</span></button></li>
+          <li><button class="filter-btn" onclick="filterCategory('produit', this)"><span><i class="fa-solid fa-graduation-cap"></i> Offre TECH</span><span class="count-badge" id="count-produit">0</span></button></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content-area">
+      <div class="viewer-card">
+        <div class="viewer-header">
+          <div>
+            <h3 id="currentViewTitle" style="font-family: 'Montserrat'; color: var(--tech-blue);">Visionneuse de Présentation</h3>
+            <span id="currentViewCategory" class="ppt-tag" style="margin-top: 5px; display: inline-block;">Sélectionnez une présentation</span>
+          </div>
+          <button class="btn-submit" style="width: auto; margin:0;" onclick="downloadCurrent()"><i class="fa-solid fa-download"></i> Télécharger .pptx</button>
+        </div>
+
+        <div class="viewer-frame-container" id="viewerContainer">
+          <div id="slideContent" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <p style="color: #94A3B8;"><i class="fa-regular fa-file-powerpoint" style="font-size: 3rem; margin-bottom: 10px;"></i><br>Sélectionnez un cours dans le catalogue ci-dessous</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Montserrat'; color: var(--tech-blue);">Catalogue des présentations disponibles</h3>
+      <div class="presentations-grid" id="presentationsGrid"></div>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2026 TECH Global University Afrique - Direction Commerciale Côte d'Ivoire
+  </footer>
+
+  <script>
+    let presentations = [];
+    let currentItem = null;
+    let currentSlideIdx = 0;
+    let loadedFileBlob = null;
+
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('fileNameDisplay').textContent = file.name;
+        if (!document.getElementById('docTitle').value) {
+          document.getElementById('docTitle').value = file.name.replace(/\.[^/.]+$/, "");
+        }
+        loadedFileBlob = file;
+      }
+    }
+
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const title = document.getElementById('docTitle').value;
+      const category = document.getElementById('docCategory').value;
+      const categorySelect = document.getElementById('docCategory');
+      const categoryLabel = categorySelect.options[categorySelect.selectedIndex].text;
+
+      if (loadedFileBlob) {
+        const newPpt = {
+          id: Date.now().toString(),
+          title: title,
+          category: category,
+          categoryLabel: categoryLabel,
+          date: new Date().toLocaleDateString('fr-FR'),
+          file: loadedFileBlob,
+          slides: [
+            { title: title + " - Diapositive 1", body: "Bienvenue dans le module : " + title + ".<br>• Présentation officielle TECH Afrique.<br>• Support commercial calibré pour la région Côte d'Ivoire." },
+            { title: "Objectifs de la Formation", body: "1. Maîtrise de l'offre académique TECH.<br>2. Analyse du marché local et opportunités à Abidjan.<br>3. Application des méthodes de vente consultative (BANT / SIMAC)." },
+            { title: "Plan d'Action Commercial", body: "• Phoning qualifié & Nurturing WhatsApp.<br>• Prise de rendez-vous avec les candidats et décideurs.<br>• Suivi personnalisé de la candidature au paiement." }
+          ]
+        };
+
+        presentations.unshift(newPpt);
+        renderGrid('all');
+        updateCounts();
+        displaySlideShow(newPpt);
+
+        this.reset();
+        document.getElementById('fileNameDisplay').textContent = "Cliquez pour choisir un fichier .pptx";
+        loadedFileBlob = null;
+      }
+    });
+
+    function displaySlideShow(item) {
+      currentItem = item;
+      currentSlideIdx = 0;
+      document.getElementById('currentViewTitle').textContent = item.title;
+      document.getElementById('currentViewCategory').textContent = item.categoryLabel;
+      renderCurrentSlide();
+    }
+
+    function renderCurrentSlide() {
+      const container = document.getElementById('slideContent');
+      const slide = currentItem.slides[currentSlideIdx];
+
+      container.innerHTML = `
+        <div class="slide-canvas">
+          <div>
+            <div class="slide-title">${slide.title}</div>
+            <div class="slide-body">${slide.body}</div>
+          </div>
+          <div style="font-size: 0.8rem; color: #888;">TECH Global University Afrique • Côte d'Ivoire</div>
+        </div>
+        <div class="slide-controls">
+          <button class="btn-nav" onclick="changeSlide(-1)" ${currentSlideIdx === 0 ? 'disabled style="opacity:0.5"' : ''}><i class="fa-solid fa-chevron-left"></i> Précédent</button>
+          <span class="slide-indicator">Diapositive ${currentSlideIdx + 1} / ${currentItem.slides.length}</span>
+          <button class="btn-nav" onclick="changeSlide(1)" ${currentSlideIdx === currentItem.slides.length - 1 ? 'disabled style="opacity:0.5"' : ''}>Suivant <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      `;
+    }
+
+    function changeSlide(dir) {
+      if (currentItem && currentItem.slides[currentSlideIdx + dir]) {
+        currentSlideIdx += dir;
+        renderCurrentSlide();
+      }
+    }
+
+    function renderGrid(filter) {
+      const grid = document.getElementById('presentationsGrid');
+      grid.innerHTML = '';
+      const filtered = filter === 'all' ? presentations : presentations.filter(p => p.category === filter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<p style="color: var(--tech-gray); font-size: 0.9rem;">Aucun cours chargé pour le moment.</p>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'ppt-card';
+        card.onclick = () => displaySlideShow(item);
+        card.innerHTML = `
+          <div class="ppt-card-header">
+            <div class="ppt-card-title">${item.title}</div>
+          </div>
+          <div class="ppt-card-body">
+            <span class="ppt-tag">${item.categoryLabel}</span>
+            <span style="font-size: 0.8rem; color: #666;"><i class="fa-regular fa-calendar"></i> ${item.date}</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGrid(cat);
+    }
+
+    function updateCounts() {
+      document.getElementById('count-all').textContent = presentations.length;
+      document.getElementById('count-commercial').textContent = presentations.filter(p => p.category === 'commercial').length;
+      document.getElementById('count-region').textContent = presentations.filter(p => p.category === 'region').length;
+      document.getElementById('count-produit').textContent = presentations.filter(p => p.category === 'produit').length;
+    }
+
+    function downloadCurrent() {
+      if (!currentItem || !currentItem.file) {
+        alert("Veuillez sélectionner un cours.");
+        return;
+      }
+      const url = URL.createObjectURL(currentItem.file);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = currentItem.file.name;
+      a.click();
+    }
+  </script>
+</body>
+</html>
